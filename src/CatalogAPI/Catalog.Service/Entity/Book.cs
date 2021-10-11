@@ -1,11 +1,12 @@
 ﻿using System;
 using Liquid.Repository;
+using MongoDB.Bson;
 
 namespace Catalog.Service.Entity
 {
-    public sealed class Book : LiquidEntity<string>
+    public sealed class Book : LiquidEntity<ObjectId>
     {
-        public string BookName { get; set; }
+        public string Name { get; set; }
 
         public decimal Price { get; set; }
 

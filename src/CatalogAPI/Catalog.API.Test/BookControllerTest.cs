@@ -5,6 +5,7 @@ using Catalog.API.Controllers;
 using Catalog.Service.Books;
 using Catalog.Service.Entity;
 using MediatR;
+using MongoDB.Bson;
 using Moq;
 using Xunit;
 
@@ -20,30 +21,29 @@ namespace Catalog.API.Test
             // Arrange
             _mediatorMock
                 .Setup(m => m.Send(new BooksRequest(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<Book> {
+                .ReturnsAsync(new BooksResponse(new List<Book> {
                     new Book {
-                        Id = "613260743633c438d5250513",
+                        Id = new ObjectId("613260743633c438d5250513"),
                         Author = "Ralph Johnson",
-                        BookName = "Design Patterns",
+                        Name = "Design Patterns",
                         Category = "Computers",
                         Price = 54.90M
                     },
                     new Book {
-                        Id = "613260743633c438d5250514",
+                        Id = new ObjectId("613260743633c438d5250514"),
                         Author = "Robert C. Martin",
-                        BookName = "Clean Code",
+                        Name = "Clean Code",
                         Category = "Computers",
                         Price = 43.15M
                     }
-                });
-            var controller = new BookController(_mediatorMock.Object);
+                }));
+            var controller = new BooksController(_mediatorMock.Object);
 
             // Act
             var response = await controller.Get();
 
             // Assert
-            var result = Assert.IsType<List<Book>>(response.Value);
-            Assert.True(result.Count > 0);
+            Assert.NotNull(response);
         }
     }
 }

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Catalog.Service.Books;
 using Catalog.Service.Entity;
 using Liquid.Repository;
 using MediatR;
+using MongoDB.Bson;
 using Moq;
 using Xunit;
 
@@ -11,8 +13,7 @@ namespace Catalog.Service.Test
 {
     public class BooksRequestHandlerTest
     {
-        private readonly Mock<ILiquidRepository<Book, string>> _repositoryMock = new();
-        private readonly Mock<IRequest<List<Book>>> _request = new();
+        private readonly Mock<ILiquidRepository<Book, ObjectId>> _repositoryMock = new();
 
         [Fact]
         public async void Handle()
@@ -22,16 +23,16 @@ namespace Catalog.Service.Test
                 .Setup(o => o.FindAllAsync())
                 .ReturnsAsync(new List<Book> {
                     new Book {
-                        Id = "613260743633c438d5250513",
+                        Id = new ObjectId("613260743633c438d5250513"),
                         Author = "Ralph Johnson",
-                        BookName = "Design Patterns",
+                        Name = "Design Patterns",
                         Category = "Computers",
                         Price = 54.90M
                     },
                     new Book {
-                        Id = "613260743633c438d5250514",
+                        Id = new ObjectId("613260743633c438d5250514"),
                         Author = "Robert C. Martin",
-                        BookName = "Clean Code",
+                        Name = "Clean Code",
                         Category = "Computers",
                         Price = 43.15M
                     }
@@ -39,10 +40,10 @@ namespace Catalog.Service.Test
             var handler = new BooksRequestHandler(_repositoryMock.Object);
 
             // Act
-            var result = await handler.Handle(_request.Object, CancellationToken.None);
+            var result = await handler.Handle(new BooksRequest(), CancellationToken.None);
 
             // Assert
-            Assert.True(result.Count > 0);
+            Assert.True(result.Response.Any());
         }
     }
 }

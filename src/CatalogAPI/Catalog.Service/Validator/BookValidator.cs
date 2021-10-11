@@ -12,8 +12,8 @@ namespace Catalog.Service.Validator
     {
         internal BookValidator()
         {
-            RuleFor(p => p.BookName)
-                .NotEmpty().WithMessage("Book Name not informed");
+            RuleFor(p => p.Name)
+                .NotEmpty().WithMessage("Name not informed");
 
             RuleFor(p => p.Author)
                 .NotEmpty().WithMessage("Author not informed");

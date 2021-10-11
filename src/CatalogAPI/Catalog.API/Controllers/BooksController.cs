@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Catalog.Service.Books;
 using Catalog.Service.Entity;
@@ -13,13 +14,13 @@ namespace Catalog.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class BookController : LiquidControllerBase
+    public class BooksController : LiquidControllerBase
     {
-        public BookController(IMediator mediator) 
+        public BooksController(IMediator mediator) 
             : base(mediator) { }
 
         [HttpGet]
-        public async Task<ActionResult<List<Book>>> Get() =>
+        public async Task<ActionResult<BooksResponse>> Get() =>
             await ExecuteAsync(new BooksRequest());
     }
 }
