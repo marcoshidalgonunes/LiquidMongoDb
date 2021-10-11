@@ -1,11 +1,6 @@
-using System.Linq;
-using System.Reflection;
 using Catalog.API.Configuration;
 using Catalog.Service.Books;
 using Catalog.Service.Entity;
-using Liquid.Core.Attributes;
-using Liquid.Repository.Configuration;
-using Liquid.Repository.Mongo.Configuration;
 using Liquid.WebApi.Http.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

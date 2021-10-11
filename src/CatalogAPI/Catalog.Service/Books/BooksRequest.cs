@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Catalog.Service.Entity;
-using MediatR;
+﻿using MediatR;
 
 namespace Catalog.Service.Books
 {

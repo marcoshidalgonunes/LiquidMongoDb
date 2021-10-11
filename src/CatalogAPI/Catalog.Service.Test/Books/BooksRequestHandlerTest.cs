@@ -4,7 +4,6 @@ using System.Threading;
 using Catalog.Service.Books;
 using Catalog.Service.Entity;
 using Liquid.Repository;
-using MediatR;
 using MongoDB.Bson;
 using Moq;
 using Xunit;

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Catalog.Service.Books;
-using Catalog.Service.Entity;
 using Liquid.WebApi.Http.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Catalog.API.Controllers
 {
