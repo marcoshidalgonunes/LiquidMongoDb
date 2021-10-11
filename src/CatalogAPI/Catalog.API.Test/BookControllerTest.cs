@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Catalog.API.Controllers;
 using Catalog.Service.Books;
 using Catalog.Service.Entity;
@@ -18,7 +19,7 @@ namespace Catalog.API.Test
         {
             // Arrange
             _mediatorMock
-                .Setup(m => m.Send(new BooksRequest(), System.Threading.CancellationToken.None))
+                .Setup(m => m.Send(new BooksRequest(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new List<Book> {
                     new Book {
                         Id = "613260743633c438d5250513",
