@@ -1,5 +1,5 @@
 using Catalog.API.Configuration;
-using Catalog.Service.Books;
+using Catalog.Service.Books.Handler;
 using Catalog.Service.Entity;
 using Liquid.WebApi.Http.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -26,9 +26,9 @@ namespace Catalog.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddLiquidMongoDatabaseWithTelemetry<Book, ObjectId>("BookstoreDb");
+            services.AddLiquidMongoDatabaseWithTelemetry<Book, string>("BookstoreDb");
 
-            services.AddLiquidHttp(typeof(BooksRequestHandler).Assembly);
+            services.AddLiquidHttp(typeof(BooksListRequestHandler).Assembly);
 
             services.AddControllers();
         }

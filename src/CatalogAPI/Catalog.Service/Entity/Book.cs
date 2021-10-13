@@ -1,10 +1,8 @@
-﻿using System;
-using Liquid.Repository;
-using MongoDB.Bson;
+﻿using Liquid.Repository;
 
 namespace Catalog.Service.Entity
 {
-    public sealed class Book : LiquidEntity<ObjectId>
+    public sealed class Book : LiquidEntity<string>
     {
         public string Name { get; set; }
 

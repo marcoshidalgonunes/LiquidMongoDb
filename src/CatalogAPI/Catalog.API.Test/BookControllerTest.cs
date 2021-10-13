@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Threading;
 using Catalog.API.Controllers;
-using Catalog.Service.Books;
+using Catalog.Service.Books.Request;
+using Catalog.Service.Books.Response;
 using Catalog.Service.Entity;
 using MediatR;
 using MongoDB.Bson;
@@ -19,7 +20,7 @@ namespace Catalog.API.Test
         {
             // Arrange
             _mediatorMock
-                .Setup(m => m.Send(new BooksRequest(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.Send(new BooksListRequest(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new BooksResponse(new List<Book> {
                     new Book {
                         Id = new ObjectId("613260743633c438d5250513"),
