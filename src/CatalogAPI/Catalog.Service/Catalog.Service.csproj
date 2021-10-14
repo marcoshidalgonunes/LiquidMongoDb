@@ -5,9 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entity\**" />
+    <Compile Remove="Validator\**" />
+    <EmbeddedResource Remove="Entity\**" />
+    <EmbeddedResource Remove="Validator\**" />
+    <None Remove="Entity\**" />
+    <None Remove="Validator\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="10.3.3" />
     <PackageReference Include="Liquid.Repository.Mongo" Version="2.1.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Catalog.Domain\Catalog.Domain.csproj" />
   </ItemGroup>
 
 </Project>

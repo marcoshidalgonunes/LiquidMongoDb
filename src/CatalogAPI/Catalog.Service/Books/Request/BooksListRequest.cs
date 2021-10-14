@@ -2,7 +2,7 @@
 
 namespace Catalog.Service.Books.Request
 {
-    public sealed class BooksListRequest : IRequest<Response.BooksResponse>
+    public sealed class BooksListRequest : IRequest<Response.BookQueryResponse>
     {
     }
 }

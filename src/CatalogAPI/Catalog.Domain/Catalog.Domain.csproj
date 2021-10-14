@@ -7,6 +7,8 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="10.3.3" />
     <PackageReference Include="Liquid.Domain" Version="2.0.1" />
+    <PackageReference Include="Liquid.Repository" Version="2.0.0" />
+    <PackageReference Include="MongoDB.Bson" Version="2.13.2" />
   </ItemGroup>
 
 </Project>

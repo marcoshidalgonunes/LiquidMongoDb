@@ -1,6 +1,6 @@
 using Catalog.API.Configuration;
 using Catalog.Service.Books.Handler;
-using Catalog.Service.Entity;
+using Catalog.Domain.Entity;
 using Liquid.WebApi.Http.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

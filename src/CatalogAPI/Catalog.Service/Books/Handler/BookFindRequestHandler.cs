@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Catalog.Domain.Entity;
 using Liquid.Repository;
 using MediatR;
 
@@ -7,9 +8,9 @@ namespace Catalog.Service.Books.Handler
 {
     public sealed class BookFindRequestHandler : IRequestHandler<Request.BookFindRequest, Response.BookResponse>
     {
-        private readonly ILiquidRepository<Entity.Book, string> _booksRepository;
+        private readonly ILiquidRepository<Book, string> _booksRepository;
 
-        public BookFindRequestHandler(ILiquidRepository<Entity.Book, string> booksRepository)
+        public BookFindRequestHandler(ILiquidRepository<Book, string> booksRepository)
         {
             _booksRepository = booksRepository;
         }

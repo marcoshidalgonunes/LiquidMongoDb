@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Catalog.Service;
-using Catalog.Service.Books;
+﻿using System.Threading;
+using Catalog.Domain.Entity;
 using Liquid.Repository;
-using MongoDB.Bson;
 using Moq;
 using Xunit;
 
@@ -12,7 +8,7 @@ namespace Catalog.Service.Test.Handler
 {
     public class BookFindRequestHandlerTest
     {
-        private readonly Mock<ILiquidRepository<Entity.Book, string>> _repositoryMock = new();
+        private readonly Mock<ILiquidRepository<Book, string>> _repositoryMock = new();
 
         [Fact]
         public async void Handle()
@@ -21,7 +17,7 @@ namespace Catalog.Service.Test.Handler
             var id = "613260743633c438d5250513";
             _repositoryMock
                 .Setup(o => o.FindByIdAsync(id))
-                .ReturnsAsync(new Entity.Book {
+                .ReturnsAsync(new Book {
                      Id = id,
                      Author = "Ralph Johnson",
                      Name = "Design Patterns",

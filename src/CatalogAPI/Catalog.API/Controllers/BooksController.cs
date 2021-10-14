@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+using Catalog.Domain.Entity;
 using Catalog.Service.Books.Request;
 using Catalog.Service.Books.Response;
-using Catalog.Service.Entity;
 using Liquid.WebApi.Http.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +17,7 @@ namespace Catalog.API.Controllers
             : base(mediator) { }
 
         [HttpGet]
-        public async Task<ActionResult<BooksResponse>> Get() =>
+        public async Task<ActionResult<BookQueryResponse>> Get() =>
             await ExecuteAsync(new BooksListRequest());
 
         [HttpGet("{id:length(24)}", Name = "GetBook")]
@@ -27,5 +27,13 @@ namespace Catalog.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Book book) =>
             await ExecuteAsync(new BookCreateRequest(book), HttpStatusCode.OK);
+
+        [HttpPut]
+        public async Task<IActionResult> Update(Book book) =>
+            await ExecuteAsync(new BookUpdateRequest(book), HttpStatusCode.OK);
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string id) =>
+            await ExecuteAsync(new BookDeleteRequest(id), HttpStatusCode.OK);
     }
 }

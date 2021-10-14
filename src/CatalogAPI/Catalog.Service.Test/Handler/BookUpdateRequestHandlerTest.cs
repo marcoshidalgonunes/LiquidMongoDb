@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Catalog.Service.Test.Handler
 {
-    public class BookCreateRequestHandlerTest
+    public class BookUpdateRequestHandlerTest
     {
         private readonly Mock<ILiquidRepository<Book, string>> _repositoryMock = new();
 
@@ -17,17 +17,18 @@ namespace Catalog.Service.Test.Handler
             // Arrange
             var book = new Book
             {
+                Id = "613260743633c438d5250513",
                 Author = "Ralph Johnson",
                 Name = "Design Patterns",
                 Category = "Computers",
-                Price = 54.90M
+                Price = 27.45M
             };
             _repositoryMock
                 .Setup(o => o.AddAsync(book));
-            var handler = new Books.Handler.BookCreateRequestHandler(_repositoryMock.Object);
+            var handler = new Books.Handler.BookUpdateRequestHandler(_repositoryMock.Object);
 
             // Act
-            var result = await handler.Handle(new Books.Request.BookCreateRequest(book), It.IsAny<CancellationToken>());
+            var result = await handler.Handle(new Books.Request.BookUpdateRequest(book), It.IsAny<CancellationToken>());
 
             // Assert
             Assert.IsType<Unit>(result);

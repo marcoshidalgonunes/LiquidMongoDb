@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Catalog.Domain.Entity;
 
 namespace Catalog.Service.Books.Request
 {
-    class BookUpdateRequest
+    public sealed class BookUpdateRequest : BaseBookEditRequest
     {
+        public BookUpdateRequest(Book request)
+            : base(request) { }
     }
 }

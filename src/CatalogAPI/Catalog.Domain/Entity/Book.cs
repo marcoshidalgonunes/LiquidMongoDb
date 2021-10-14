@@ -1,11 +1,10 @@
-﻿using System;
-using Liquid.Repository;
+﻿using Liquid.Repository;
 
 namespace Catalog.Domain.Entity
 {
-    public sealed class Book : LiquidEntity<Guid>
+    public sealed class Book : LiquidEntity<string>
     {
-        public string BookName { get; set; }
+        public string Name { get; set; }
 
         public decimal Price { get; set; }
 

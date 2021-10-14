@@ -1,21 +1,21 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Catalog.Service.Entity;
+using Catalog.Domain.Entity;
+using Catalog.Service.Books.Request;
 using Liquid.Repository;
-using MongoDB.Bson;
 
 namespace Catalog.Service.Books.Handler
 {
-    public sealed class BooksListRequestHandler : BaseBooksRequestHandler
+    public sealed class BooksListRequestHandler : BaseBookQueryRequestHandler<BooksListRequest>
     {
         public BooksListRequestHandler(ILiquidRepository<Book, string> booksRepository)
             : base(booksRepository) { }
 
-        public override async Task<Response.BooksResponse> Handle(Request.BooksListRequest request, CancellationToken cancellationToken)
+        public override async Task<Response.BookQueryResponse> Handle(Request.BooksListRequest request, CancellationToken cancellationToken)
         {
             var items = await BooksRepository.FindAllAsync();
 
-            var response = new Response.BooksResponse(items);
+            var response = new Response.BookQueryResponse(items);
 
             return response; 
         }
