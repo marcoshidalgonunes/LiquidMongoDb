@@ -37,7 +37,7 @@ namespace Catalog.Service.Test.Handler
             var handler = new Books.Handler.BooksListRequestHandler(_repositoryMock.Object);
 
             // Act
-            var result = await handler.Handle(new Books.Request.BooksListRequest(),It.IsAny<CancellationToken>());
+            var result = await handler.Handle(new Books.Request.BookListRequest(),It.IsAny<CancellationToken>());
 
             // Assert
             Assert.True(result.Response.Any());

@@ -18,11 +18,15 @@ namespace Catalog.API.Controllers
 
         [HttpGet]
         public async Task<ActionResult<BookQueryResponse>> Get() =>
-            await ExecuteAsync(new BooksListRequest());
+            await ExecuteAsync(new BookListRequest());
 
         [HttpGet("{id:length(24)}", Name = "GetBook")]
         public async Task<IActionResult> Get(string id) =>
             await ExecuteAsync(new BookFindRequest(id), HttpStatusCode.OK);
+
+        [HttpGet("{criteria},{search}")]
+        public async Task<ActionResult<BookQueryResponse>> Get(string criteria, string search) =>
+            await ExecuteAsync(new BookSearchRequest(criteria, search));
 
         [HttpPost]
         public async Task<IActionResult> Create(Book book) =>
