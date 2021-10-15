@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Catalog.Domain.Entity;
 using Liquid.Repository;
-using MediatR;
 
 namespace Catalog.Service.Books.Handler
 {
@@ -11,13 +10,17 @@ namespace Catalog.Service.Books.Handler
         public BookUpdateRequestHandler(ILiquidRepository<Book, string> booksRepository)
             : base(booksRepository) { }
 
-        public async override Task<Unit> Handle(Request.BookUpdateRequest request, CancellationToken cancellationToken)
+        public async override Task<Book> Handle(Request.BookUpdateRequest request, CancellationToken cancellationToken)
         {
-            var book = await GetValidatedRequest(request);
+            var bookIn = await GetValidatedRequest(request);
 
-            await BooksRepository.UpdateAsync(book);
+            var book = await BooksRepository.FindByIdAsync(bookIn.Id);
+            if (book != null && book.Id == bookIn.Id)
+            {
+                await BooksRepository.UpdateAsync(bookIn);
+            }
 
-            return new Unit();
+            return book;
         }
     }
 }

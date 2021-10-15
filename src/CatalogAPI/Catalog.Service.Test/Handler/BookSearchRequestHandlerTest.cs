@@ -30,22 +30,22 @@ namespace Catalog.Service.Test.Handler
             var collectionName = "Books";
             var criteria = "Category";
             var search = "Computers";
-            var queryExpr = new BsonRegularExpression(new Regex(search, RegexOptions.IgnoreCase));
-            var builder = Builders<Book>.Filter;
-            var filter = builder.Regex(criteria, queryExpr);
+
+            var books = new List<Book> 
+            {
+                new Book {
+                    Id = "613260743633c438d5250513",
+                    Author = "Ralph Johnson",
+                    Name = "Design Patterns",
+                    Category = search,
+                    Price = 54.90M
+                }
+            };
 
             var cursorMock = new Mock<IAsyncCursor<Book>>();
             cursorMock
                 .Setup(_ => _.Current)
-                .Returns(new List<Book> {
-                    new Book {
-                        Id = "613260743633c438d5250513",
-                        Author = "Ralph Johnson",
-                        Name = "Design Patterns",
-                        Category = "Computers",
-                        Price = 54.90M
-                    }
-                });
+                .Returns(books);
             cursorMock
                 .SetupSequence(_ => _.MoveNext(It.IsAny<CancellationToken>()))
                 .Returns(true)
@@ -57,7 +57,7 @@ namespace Catalog.Service.Test.Handler
 
             var collectionMock = new Mock<IMongoCollection<Book>>();
             collectionMock
-                .Setup(o => o.FindAsync(filter, It.IsAny<FindOptions<Book, Book>>(), It.IsAny<CancellationToken>()))
+                .Setup(o => o.FindAsync(It.IsAny<FilterDefinition<Book>>(), It.IsAny<FindOptions<Book, Book>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(cursorMock.Object);
 
             _ = _contextMock
@@ -67,7 +67,7 @@ namespace Catalog.Service.Test.Handler
                 .Setup(o => o.Database.GetCollection<Book>(collectionName, null))
                 .Returns(collectionMock.Object);
 
-            var repositoryMock = new Mock<MongoRepository<Book, string>>(MockBehavior.Loose, _contextMock.Object);
+            var repositoryMock = new Mock<MongoRepository<Book, string>>(MockBehavior.Strict, _contextMock.Object);
 
             var handler = new Books.Handler.BookSearchRequestHandler(repositoryMock.Object);
 
@@ -75,7 +75,7 @@ namespace Catalog.Service.Test.Handler
             var result = await handler.Handle(new Books.Request.BookSearchRequest(criteria, search), It.IsAny<CancellationToken>());
 
             // Assert
-            Assert.NotNull(result);
+            Assert.True(result.Response.Any());
         }
     }
 }

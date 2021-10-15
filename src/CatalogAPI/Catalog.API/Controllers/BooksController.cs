@@ -16,6 +16,15 @@ namespace Catalog.API.Controllers
         public BooksController(IMediator mediator) 
             : base(mediator) { }
 
+        protected override async Task<IActionResult> ExecuteAsync<TRequest>(IRequest<TRequest> request, HttpStatusCode responseCode)
+        {
+            var response = await Mediator.Send(request);
+            if (response == null)
+                return NotFound();
+
+            return StatusCode((int)responseCode, response);
+        }
+
         [HttpGet]
         public async Task<ActionResult<BookQueryResponse>> Get() =>
             await ExecuteAsync(new BookListRequest());

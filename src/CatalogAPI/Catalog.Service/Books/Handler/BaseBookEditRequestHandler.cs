@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Catalog.Service.Books.Handler
 {
-    public abstract class BaseBookEditRequestHandler<TRequest> : IRequestHandler<TRequest>
+    public abstract class BaseBookEditRequestHandler<TRequest> : IRequestHandler<TRequest, Book>
         where TRequest: Request.BaseBookEditRequest
     {
         protected readonly ILiquidRepository<Book, string> BooksRepository;
@@ -17,7 +17,7 @@ namespace Catalog.Service.Books.Handler
             BooksRepository = booksRepository;
         }
 
-        public abstract Task<Unit> Handle(TRequest request, CancellationToken cancellationToken);
+        public abstract Task<Book> Handle(TRequest request, CancellationToken cancellationToken);
 
         protected async Task<Book> GetValidatedRequest(TRequest request)
         {

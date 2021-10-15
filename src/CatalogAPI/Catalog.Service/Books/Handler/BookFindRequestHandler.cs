@@ -19,7 +19,8 @@ namespace Catalog.Service.Books.Handler
         {
             var book = await _booksRepository.FindByIdAsync(request.Id);
 
-            var response = new Response.BookResponse(book);
+            var response = book
+                != null ? new Response.BookResponse(book) : null;
 
             return response;
         }

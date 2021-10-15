@@ -27,9 +27,9 @@ namespace Catalog.Service.Books.Handler
             var filter = builder.Regex(request.Criteria, queryExpr);
 
             var collection = _context.Database.GetCollection<Book>(_context.Settings.CollectionName);
-            var items = await collection.FindAsync(filter, null, cancellationToken);
+            var items = await collection.FindAsync<Book>(filter, null, cancellationToken);
 
-            var response = new Response.BookQueryResponse(items != null ? await items.ToListAsync(cancellationToken) : null);
+            var response = new Response.BookQueryResponse(await items.ToListAsync(cancellationToken));
             return response;
         }
     }

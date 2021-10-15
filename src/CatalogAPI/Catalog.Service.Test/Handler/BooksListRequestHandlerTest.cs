@@ -34,6 +34,7 @@ namespace Catalog.Service.Test.Handler
                         Price = 43.15M
                     }
                 });
+
             var handler = new Books.Handler.BooksListRequestHandler(_repositoryMock.Object);
 
             // Act
