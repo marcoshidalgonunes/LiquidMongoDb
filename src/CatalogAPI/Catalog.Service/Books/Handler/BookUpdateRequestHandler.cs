@@ -10,17 +10,18 @@ namespace Catalog.Service.Books.Handler
         public BookUpdateRequestHandler(ILiquidRepository<Book, string> booksRepository)
             : base(booksRepository) { }
 
-        public async override Task<Book> Handle(Request.BookUpdateRequest request, CancellationToken cancellationToken)
+        public async override Task<string> Handle(Request.BookUpdateRequest request, CancellationToken cancellationToken)
         {
             var bookIn = await GetValidatedRequest(request);
 
             var book = await BooksRepository.FindByIdAsync(bookIn.Id);
-            if (book != null && book.Id == bookIn.Id)
+            if (book == null || book.Id != bookIn.Id)
             {
-                await BooksRepository.UpdateAsync(bookIn);
+                return null;
             }
 
-            return book;
+            await BooksRepository.UpdateAsync(bookIn);
+            return string.Empty;
         }
     }
 }

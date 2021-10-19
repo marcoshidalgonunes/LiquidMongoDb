@@ -16,6 +16,7 @@ namespace Catalog.Service.Test.Handler
             // Arrange
             var book = new Book
             {
+                Id = "613260743633c438d5250513",
                 Author = "Ralph Johnson",
                 Name = "Design Patterns",
                 Category = "Computers",
@@ -31,7 +32,7 @@ namespace Catalog.Service.Test.Handler
             var result = await handler.Handle(new Books.Request.BookCreateRequest(book), It.IsAny<CancellationToken>());
 
             // Assert
-            Assert.IsType<Book>(result);
+            Assert.IsType<string>(result);
         }
     }
 }

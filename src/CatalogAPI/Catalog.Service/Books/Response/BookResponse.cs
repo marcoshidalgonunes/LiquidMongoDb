@@ -4,11 +4,11 @@ namespace Catalog.Service.Books.Response
 {
     public sealed class BookResponse
     {
-        public Book Response { get; private set; }
+        public Book Content { get; private set; }
 
-        public BookResponse(Book response)
+        public BookResponse(Book content)
         {
-            Response = response;
+            Content = content;
         }
     }
 }

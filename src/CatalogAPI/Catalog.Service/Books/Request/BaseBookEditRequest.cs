@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Catalog.Service.Books.Request
 {
-    public abstract class BaseBookEditRequest : IRequest<Book>
+    public abstract class BaseBookEditRequest : IRequest<string>
     {
         public Book Request { get; private set; }
 

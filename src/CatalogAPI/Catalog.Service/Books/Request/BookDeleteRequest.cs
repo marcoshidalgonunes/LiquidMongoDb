@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Catalog.Service.Books.Request
 {
-    public sealed class BookDeleteRequest : IRequest<Book>
+    public sealed class BookDeleteRequest : IRequest<string>
     {
         public string Id { get; private set; }
 

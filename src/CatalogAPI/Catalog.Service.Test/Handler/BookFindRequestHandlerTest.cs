@@ -32,7 +32,7 @@ namespace Catalog.Service.Test.Handler
             var result = await handler.Handle(new Books.Request.BookFindRequest(id), It.IsAny<CancellationToken>());
 
             // Assert
-            Assert.NotNull(result?.Response);
+            Assert.NotNull(result?.Content);
         }
 
 

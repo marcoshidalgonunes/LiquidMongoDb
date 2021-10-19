@@ -45,7 +45,7 @@ namespace Catalog.API.Controllers
         public async Task<IActionResult> Update(Book book) =>
             await ExecuteAsync(new BookUpdateRequest(book), HttpStatusCode.OK);
 
-        [HttpDelete]
+        [HttpDelete("{id:length(24)}")]
         public async Task<IActionResult> Delete(string id) =>
             await ExecuteAsync(new BookDeleteRequest(id), HttpStatusCode.OK);
     }

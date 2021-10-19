@@ -33,7 +33,7 @@ namespace Catalog.Service.Test.Handler
             var result = await handler.Handle(new Books.Request.BookDeleteRequest(id), It.IsAny<CancellationToken>());
 
             // Assert
-            Assert.IsType<Book>(result);
+            Assert.IsType<string>(result);
         }
 
         [Fact]

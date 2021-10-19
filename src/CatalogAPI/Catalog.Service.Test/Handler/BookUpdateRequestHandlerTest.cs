@@ -36,7 +36,7 @@ namespace Catalog.Service.Test.Handler
             var result = await handler.Handle(new Books.Request.BookUpdateRequest(book), It.IsAny<CancellationToken>());
 
             // Assert
-            Assert.IsType<Book>(result);
+            Assert.IsType<string>(result);
         }
 
         [Fact]
@@ -46,7 +46,7 @@ namespace Catalog.Service.Test.Handler
             var id = "613260743633c438d5250513";
             var book = new Book
             {
-                Id = id,
+                Id = "613260743633c438d5250529",
                 Author = "Ralph Johnson",
                 Name = "Design Patterns",
                 Category = "Computers",
@@ -56,8 +56,6 @@ namespace Catalog.Service.Test.Handler
             _repositoryMock
                 .Setup(o => o.FindByIdAsync(id))
                 .ReturnsAsync(book);
-            _repositoryMock
-                .Setup(o => o.UpdateAsync(book));
 
             var handler = new Books.Handler.BookUpdateRequestHandler(_repositoryMock.Object);
 
@@ -65,7 +63,7 @@ namespace Catalog.Service.Test.Handler
             var result = await handler.Handle(new Books.Request.BookUpdateRequest(book), It.IsAny<CancellationToken>());
 
             // Assert
-            Assert.IsType<Book>(result);
+            Assert.Null(result);
         }
     }
 }

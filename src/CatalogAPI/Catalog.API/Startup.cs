@@ -1,13 +1,13 @@
+using System;
 using Catalog.API.Configuration;
-using Catalog.Service.Books.Handler;
 using Catalog.Domain.Entity;
+using Catalog.Service.Books.Handler;
 using Liquid.WebApi.Http.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MongoDB.Bson;
 
 namespace Catalog.API
 {
@@ -26,6 +26,20 @@ namespace Catalog.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            if (_env.IsDevelopment())
+            {
+                services.AddCors(options =>
+                {
+                    options.AddDefaultPolicy(
+                        builder =>
+                        {
+                            builder.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback);
+                            builder.AllowAnyHeader();
+                            builder.AllowAnyMethod();
+                        });
+                });
+            }
+
             services.AddLiquidMongoDatabaseWithTelemetry<Book, string>("BookstoreDb");
 
             services.AddLiquidHttp(typeof(BooksListRequestHandler).Assembly);
@@ -46,6 +60,8 @@ namespace Catalog.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

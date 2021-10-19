@@ -5,11 +5,11 @@ namespace Catalog.Service.Books.Response
 {
     public sealed class BookQueryResponse
     {
-        public IEnumerable<Book> Response { get; private set; }
+        public IEnumerable<Book> Content { get; private set; }
 
-        public BookQueryResponse(IEnumerable<Book> response)
+        public BookQueryResponse(IEnumerable<Book> content)
         {
-            Response = response;
+            Content = content;
         }
     }
 }

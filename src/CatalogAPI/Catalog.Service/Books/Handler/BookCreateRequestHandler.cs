@@ -10,13 +10,13 @@ namespace Catalog.Service.Books.Handler
         public BookCreateRequestHandler(ILiquidRepository<Book, string> booksRepository)
             : base(booksRepository) { }
 
-        public async override Task<Book> Handle(Request.BookCreateRequest request, CancellationToken cancellationToken)
+        public async override Task<string> Handle(Request.BookCreateRequest request, CancellationToken cancellationToken)
         {
             var book = await GetValidatedRequest(request);
 
             await BooksRepository.AddAsync(book);
 
-            return book;
+            return book.Id;
         }
     }
 }
