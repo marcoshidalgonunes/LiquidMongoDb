@@ -141,11 +141,11 @@ class BookEdit extends Component {
       await ApiBooks.getById(this.state.id)
         .then(response => this.setState({
           loading: false,
-          id: response.data.content.id,
-          name: response.data.content.name,
-          author: response.data.content.author,
-          category: response.data.content.category,
-         price: response.data.content.price
+          id: response.data.id,
+          name: response.data.name,
+          author: response.data.author,
+          category: response.data.category,
+         price: response.data.price
         }))
         .catch(err => { 
           console.log(err);

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Catalog.Service.Books.Handler
 {
-    public sealed class BookFindRequestHandler : IRequestHandler<Request.BookFindRequest, Response.BookResponse>
+    public sealed class BookFindRequestHandler : IRequestHandler<Request.BookFindRequest, Book>
     {
         private readonly ILiquidRepository<Book, string> _booksRepository;
 
@@ -15,14 +15,9 @@ namespace Catalog.Service.Books.Handler
             _booksRepository = booksRepository;
         }
 
-        public async Task<Response.BookResponse> Handle(Request.BookFindRequest request, CancellationToken cancellationToken)
+        public async Task<Book> Handle(Request.BookFindRequest request, CancellationToken cancellationToken)
         {
-            var book = await _booksRepository.FindByIdAsync(request.Id);
-
-            var response = book
-                != null ? new Response.BookResponse(book) : null;
-
-            return response;
+            return await _booksRepository.FindByIdAsync(request.Id);
         }
     }
 }

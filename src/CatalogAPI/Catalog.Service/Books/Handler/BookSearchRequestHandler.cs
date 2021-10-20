@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Catalog.Domain.Entity;
@@ -10,7 +11,7 @@ using MongoDB.Driver;
 
 namespace Catalog.Service.Books.Handler
 {
-    public sealed class BookSearchRequestHandler : IRequestHandler<Request.BookSearchRequest, Response.BookQueryResponse>
+    public sealed class BookSearchRequestHandler : IRequestHandler<Request.BookSearchRequest, IEnumerable<Book>>
     {
         private readonly IMongoDataContext<Book> _context;
 
@@ -20,7 +21,7 @@ namespace Catalog.Service.Books.Handler
             _context = repository.DataContext as IMongoDataContext<Book>;
         }
 
-        public async Task<Response.BookQueryResponse> Handle(Request.BookSearchRequest request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Book>> Handle(Request.BookSearchRequest request, CancellationToken cancellationToken)
         {
             var queryExpr = new BsonRegularExpression(new Regex(request.Value, RegexOptions.IgnoreCase));
             var builder = Builders<Book>.Filter;
@@ -29,8 +30,7 @@ namespace Catalog.Service.Books.Handler
             var collection = _context.Database.GetCollection<Book>(_context.Settings.CollectionName);
             var items = await collection.FindAsync<Book>(filter, null, cancellationToken);
 
-            var response = new Response.BookQueryResponse(await items.ToListAsync(cancellationToken));
-            return response;
+            return await items.ToListAsync(cancellationToken);
         }
     }
 }

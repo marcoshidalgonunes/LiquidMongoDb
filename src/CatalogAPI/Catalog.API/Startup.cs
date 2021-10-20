@@ -40,7 +40,13 @@ namespace Catalog.API
                 });
             }
 
-            services.AddLiquidMongoDatabaseWithTelemetry<Book, string>("BookstoreDb");
+            var databaseName = "BookstoreDb";
+            if (bool.TryParse(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), out bool isInContainer) && isInContainer)
+            {
+                databaseName += "-Docker";
+            }
+
+            services.AddLiquidMongoDatabaseWithTelemetry<Book, string>(databaseName);
 
             services.AddLiquidHttp(typeof(BooksListRequestHandler).Assembly);
 

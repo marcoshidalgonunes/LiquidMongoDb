@@ -16,9 +16,12 @@ services:
     build:
       context: .
       dockerfile: Catalog.API/Dockerfile
+    depends_on:
+      - mongo
+    links:
+      - mongo
 
 volumes:
   mongodata:
-     external: true
          
   

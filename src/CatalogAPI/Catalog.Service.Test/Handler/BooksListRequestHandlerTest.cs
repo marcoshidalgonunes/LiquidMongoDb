@@ -41,7 +41,7 @@ namespace Catalog.Service.Test.Handler
             var result = await handler.Handle(new Books.Request.BookListRequest(),It.IsAny<CancellationToken>());
 
             // Assert
-            Assert.True(result.Content.Any());
+            Assert.True(result.Any());
         }
     }
 }

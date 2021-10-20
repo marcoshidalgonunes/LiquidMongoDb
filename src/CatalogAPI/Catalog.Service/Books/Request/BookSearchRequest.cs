@@ -1,8 +1,10 @@
-﻿using MediatR;
+﻿using System.Collections.Generic;
+using Catalog.Domain.Entity;
+using MediatR;
 
 namespace Catalog.Service.Books.Request
 {
-    public sealed class BookSearchRequest : IRequest<Response.BookQueryResponse>
+    public sealed class BookSearchRequest : IRequest<IEnumerable<Book>>
     {
         public string Criteria { get; private set; }
 

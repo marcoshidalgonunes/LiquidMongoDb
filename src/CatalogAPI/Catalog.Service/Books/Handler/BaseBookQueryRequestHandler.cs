@@ -1,14 +1,14 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Catalog.Domain.Entity;
-using Catalog.Service.Books.Response;
 using Liquid.Repository;
 using MediatR;
 
 namespace Catalog.Service.Books.Handler
 {
-    public abstract class BaseBookQueryRequestHandler<TRequest> : IRequestHandler<TRequest, BookQueryResponse>
-        where TRequest : IRequest<BookQueryResponse>
+    public abstract class BaseBookQueryRequestHandler<TRequest> : IRequestHandler<TRequest, IEnumerable<Book>>
+        where TRequest : IRequest<IEnumerable<Book>>
     {
         protected readonly ILiquidRepository<Book, string> BooksRepository;
 
@@ -17,6 +17,6 @@ namespace Catalog.Service.Books.Handler
             BooksRepository = booksRepository;
         }
 
-        public abstract Task<BookQueryResponse> Handle(TRequest request, CancellationToken cancellationToken);
+        public abstract Task<IEnumerable<Book>> Handle(TRequest request, CancellationToken cancellationToken);
     }
 }

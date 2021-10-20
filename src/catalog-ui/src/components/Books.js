@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export class Books extends Component { 
     constructor(catalog) {
         super();
-        this.books = catalog.books.data.content;
+        this.books = catalog.books.data;
     }
 
     render() {

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Catalog.Domain.Entity;
 using Liquid.Repository;
@@ -6,7 +7,7 @@ using MediatR;
 
 namespace Catalog.Service.Books.Handler
 {
-    public sealed class BooksListRequestHandler : IRequestHandler<Request.BookListRequest, Response.BookQueryResponse>
+    public sealed class BooksListRequestHandler : IRequestHandler<Request.BookListRequest, IEnumerable<Book>>
     {
         private readonly ILiquidRepository<Book, string> _booksRepository;
 
@@ -15,13 +16,11 @@ namespace Catalog.Service.Books.Handler
             _booksRepository = booksRepository;
         }
             
-        public async Task<Response.BookQueryResponse> Handle(Request.BookListRequest request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Book>> Handle(Request.BookListRequest request, CancellationToken cancellationToken)
         {
             var items = await _booksRepository.FindAllAsync();
 
-            var response = new Response.BookQueryResponse(items);
-
-            return response; 
+            return items; 
         }
     }
 }

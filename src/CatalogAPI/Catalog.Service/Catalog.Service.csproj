@@ -5,10 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Books\Response\**" />
     <Compile Remove="Entity\**" />
     <Compile Remove="Validator\**" />
+    <EmbeddedResource Remove="Books\Response\**" />
     <EmbeddedResource Remove="Entity\**" />
     <EmbeddedResource Remove="Validator\**" />
+    <None Remove="Books\Response\**" />
     <None Remove="Entity\**" />
     <None Remove="Validator\**" />
   </ItemGroup>
