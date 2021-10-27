@@ -15,7 +15,8 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "jsWebView2Debugging": true
     },
     "Catalog.API": {
       "commandName": "Project",

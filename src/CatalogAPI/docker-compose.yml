@@ -20,6 +20,27 @@ services:
       - mongo
     links:
       - mongo
+    ports:
+      - 65155:80
+      - 44398:443
+ 
+  catalog-ui:
+    image: ${DOCKER_REGISTRY-}catalogui
+    build: 
+      context: ../catalog-ui/.
+      dockerfile: Dockerfile
+    container_name: catalog_ui
+    ports:
+      - '3001:3000'
+    depends_on:
+      - catalog.api
+    links:
+      - catalog.api
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - '../catalog-ui/.:/app'
+      - '/app/node_modules'
 
 volumes:
   mongodata:
