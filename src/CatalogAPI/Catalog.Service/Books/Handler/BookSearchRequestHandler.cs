@@ -11,17 +11,18 @@ using MongoDB.Driver;
 
 namespace Catalog.Service.Books.Handler
 {
-    public sealed class BookSearchRequestHandler : IRequestHandler<Request.BookSearchRequest, IEnumerable<Book>>
+    public sealed class BookSearchRequestHandler : BaseBookQueryRequestHandler<Request.BookSearchRequest>
     {
         private readonly IMongoDataContext<Book> _context;
 
         public BookSearchRequestHandler(ILiquidRepository<Book, string> booksRepository)
+            : base(booksRepository)
         {
             var repository = booksRepository;
             _context = repository.DataContext as IMongoDataContext<Book>;
         }
 
-        public async Task<IEnumerable<Book>> Handle(Request.BookSearchRequest request, CancellationToken cancellationToken)
+        public override async Task<IEnumerable<Book>> Handle(Request.BookSearchRequest request, CancellationToken cancellationToken)
         {
             var queryExpr = new BsonRegularExpression(new Regex(request.Value, RegexOptions.IgnoreCase));
             var builder = Builders<Book>.Filter;

@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Catalog.Domain.Entity;
-using Catalog.Service.Books.Request;
 using Liquid.Repository;
 using MediatR;
 

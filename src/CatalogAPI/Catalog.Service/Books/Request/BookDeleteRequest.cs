@@ -1,5 +1,4 @@
-﻿using Catalog.Domain.Entity;
-using MediatR;
+﻿using MediatR;
 
 namespace Catalog.Service.Books.Request
 {
