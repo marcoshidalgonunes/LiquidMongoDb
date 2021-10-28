@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "composeLaunchServiceName": "catalog.api",
+      "composeProfile": {
+        "includes": [
+          "DockerCompose"
+        ]
+      },
+      "composeLaunchAction": "LaunchBrowser",
+      "commandVersion": "1.0",
+      "composeLaunchUrl": "http://localhost:3001"
+    }
+  }
+}

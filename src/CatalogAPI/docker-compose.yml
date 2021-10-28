@@ -4,7 +4,7 @@ services:
 
   mongo:
     container_name: bookstoredb
-    image: bookstoredb
+    image: mongo
     restart: always
     volumes:
       - mongodata:/data/db
@@ -16,6 +16,9 @@ services:
     build:
       context: .
       dockerfile: Catalog.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+    profiles: [ DockerCompose ]
     depends_on:
       - mongo
     links:

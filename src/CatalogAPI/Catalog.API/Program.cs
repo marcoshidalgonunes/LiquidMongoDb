@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 
 namespace Catalog.API
@@ -15,7 +16,14 @@ namespace Catalog.API
         {
             try
             {
-                using IHost host = CreateHostBuilder(args).Build();
+                using IHost host = CreateHostBuilder(args)
+                    .ConfigureAppConfiguration((hostContext, builder) => {
+                        if (hostContext.HostingEnvironment.IsEnvironment("DockerCompose"))
+                        {
+                            builder.AddUserSecrets<Program>();
+                        }
+                    })
+                    .Build();
                 host.Run();
             }
             catch (Exception ex)

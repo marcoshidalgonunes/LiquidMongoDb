@@ -26,7 +26,7 @@ namespace Catalog.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            if (_env.IsDevelopment())
+            if (_env.IsDevelopment() || _env.IsEnvironment("DockerCompose"))
             {
                 services.AddCors(options =>
                 {
@@ -40,13 +40,7 @@ namespace Catalog.API
                 });
             }
 
-            var databaseName = "BookstoreDb";
-            if (bool.TryParse(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), out bool isInContainer) && isInContainer)
-            {
-                databaseName += "-Docker";
-            }
-
-            services.AddLiquidMongoDatabaseWithTelemetry<Book, string>(databaseName);
+            services.AddLiquidMongoDatabaseWithTelemetry<Book, string>("BookstoreDb");
 
             services.AddLiquidHttp(typeof(BooksListRequestHandler).Assembly);
 
