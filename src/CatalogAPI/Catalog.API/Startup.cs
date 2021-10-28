@@ -53,9 +53,15 @@ namespace Catalog.API
             if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseLiquidConfigure();
             }
-
-            app.UseLiquidConfigure();
+            else
+            {
+                app.UseLiquidCulture();
+                app.UseLiquidScopedLogging();
+                app.UseLiquidContext();
+                app.UseLiquidException();
+            }
 
             app.UseHttpsRedirection();
 
