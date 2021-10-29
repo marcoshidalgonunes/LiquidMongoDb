@@ -4,7 +4,7 @@ services:
 
   mongo:
     container_name: bookstoredb
-    image: mongo
+    image: ${DOCKER_REGISTRY-}mongo
     restart: always
     volumes:
       - mongodata:/data/db
@@ -35,10 +35,6 @@ services:
     container_name: catalog_ui
     ports:
       - '3001:3000'
-    depends_on:
-      - catalog.api
-    links:
-      - catalog.api
     environment:
       - NODE_ENV=development
     volumes:
