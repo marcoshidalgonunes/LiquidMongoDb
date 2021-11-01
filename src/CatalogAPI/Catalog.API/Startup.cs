@@ -2,6 +2,9 @@ using System;
 using Catalog.API.Configuration;
 using Catalog.Domain.Entity;
 using Catalog.Service.Books.Handler;
+using Elastic.Apm.AspNetCore;
+using Elastic.Apm.DiagnosticSource;
+using Elastic.Apm.MongoDb;
 using Liquid.WebApi.Http.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -50,6 +53,13 @@ namespace Catalog.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
+            if (_env.IsEnvironment("DockerCompose"))
+            {
+                app.UseElasticApm(Configuration,
+                    new HttpDiagnosticsSubscriber(),  // Enable tracing of outgoing HTTP requests
+                    new MongoDbDiagnosticsSubscriber()); // Enable tracing of database calls through MongoDb driver
+            }
+
             if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -2,6 +2,83 @@ version: '3.4'
 
 services:
 
+  elasticsearch:
+    container_name: elasticsearch
+    image: ${DOCKER_REGISTRY-}docker.elastic.co/elasticsearch/elasticsearch:7.15.1
+    ports:
+      - 9200:9200
+    networks:
+      - lan-network
+    volumes:
+      - elasticdata:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+      - http.port=9200
+      - http.cors.enabled=true
+      - http.cors.allow-origin=http://localhost:1358,http://127.0.0.1:1358
+      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+      - http.cors.allow-credentials=true
+      - bootstrap.memory_lock=true      
+      - xpack.monitoring.enabled=true
+      - xpack.watcher.enabled=false
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
+    healthcheck:
+      interval: 20s
+      retries: 10
+      test: curl -s http://localhost:9200/_cluster/health | grep -vq '"status":"red"'
+
+  grafana:
+    image: ${DOCKER_REGISTRY-}grafana/grafana
+    ports:
+      - 3000:3000
+    networks:
+      - lan-network
+    volumes:
+      - grafanadata:/var/lib/grafana
+      
+  kibana:
+    container_name: kibana
+    image: ${DOCKER_REGISTRY-}docker.elastic.co/kibana/kibana:7.15.1
+    ports:
+      - 5601:5601
+    networks:
+      - lan-network
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    healthcheck:
+      interval: 10s
+      retries: 20
+      test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:5601/api/status
+
+  elasticsearch-apm:
+    container_name: elasticapm
+    image: ${DOCKER_REGISTRY-}docker.elastic.co/apm/apm-server:7.15.1
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+    cap_add: ["CHOWN", "DAC_OVERRIDE", "SETGID", "SETUID"]
+    cap_drop: ["ALL"]
+    ports:
+      - 8200:8200
+    networks:
+      - lan-network
+    command: >
+      apm-server -e
+        -E apm-server.rum.enabled=true
+        -E setup.kibana.host=kibana:5601
+        -E setup.template.settings.index.number_of_replicas=0
+        -E apm-server.kibana.enabled=true
+        -E apm-server.kibana.host=kibana:5601
+        -E output.elasticsearch.hosts=["elasticsearch:9200"]
+    healthcheck:
+      interval: 10s
+      retries: 12
+      test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:8200/
+
   mongo:
     container_name: bookstoredb
     image: ${DOCKER_REGISTRY-}mongo
@@ -10,6 +87,8 @@ services:
       - mongodata:/data/db
     ports:
       - 27018:27017
+    networks:
+      - lan-network
 
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
@@ -26,6 +105,8 @@ services:
     ports:
       - 65155:80
       - 44398:443
+    networks:
+      - lan-network
  
   catalog-ui:
     image: ${DOCKER_REGISTRY-}catalogui
@@ -34,7 +115,9 @@ services:
       dockerfile: Dockerfile
     container_name: catalog_ui
     ports:
-      - '3001:3000'
+      - 3001:3000
+    networks:
+      - lan-network
     environment:
       - NODE_ENV=development
     volumes:
@@ -43,5 +126,10 @@ services:
 
 volumes:
   mongodata:
-         
-  
+  elasticdata:
+  grafanadata:
+
+networks:
+  lan-network:
+    driver: bridge
+

@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Elastic.Apm.AspNetCore" Version="1.11.1" />
+    <PackageReference Include="Elastic.Apm.MongoDb" Version="1.11.1" />
+    <PackageReference Include="Elastic.Apm.SerilogEnricher" Version="1.5.3" />
     <PackageReference Include="Liquid.WebApi.Http" Version="2.0.3" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
@@ -21,6 +24,7 @@
     <PackageReference Include="Serilog.Exceptions" Version="7.1.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
+    <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.4.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
