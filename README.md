@@ -13,4 +13,12 @@ The docker-compose.yml also references some docker volumes. They should be creat
 
 The network for the orchestration is declared in docker-compose.yml.
 
+## Observability Setup
+
+For [ELK Stack](https://www.elastic.co/what-is/elk-stack) the docker-compose.yml provides the needed settings for [Kibana](https://www.elastic.co/kibana/) dashboards, including [Elasticsearch APM](https://www.elastic.co/apm/) data.
+
+It is needed to setup a Elasticsearch [Grafana](https://grafana.com/) datasource, as seen in the screenshot below:
+
+![Grafana Image](https://github.com/marcoshidalgonunes/LiquidMongoDb/blob/main/images/Grafana%20Settings%20Docker.png)
+
 
