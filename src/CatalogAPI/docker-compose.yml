@@ -28,6 +28,7 @@ services:
       test: curl -s http://localhost:9200/_cluster/health | grep -vq '"status":"red"'
 
   grafana:
+    container_name: grafana
     image: ${DOCKER_REGISTRY-}grafana/grafana
     ports:
       - 3000:3000
@@ -35,7 +36,12 @@ services:
       - lan-network
     volumes:
       - grafanadata:/var/lib/grafana
-      
+    healthcheck:
+      test: 'wget -q -Y off -O /dev/null http://localhost:3000/login > /dev/null 2>&1'
+      interval: 25s
+      timeout: 3s
+      start_period: 120s
+
   kibana:
     container_name: kibana
     image: ${DOCKER_REGISTRY-}docker.elastic.co/kibana/kibana:7.15.1
@@ -89,9 +95,15 @@ services:
       - 27018:27017
     networks:
       - lan-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
 
   catalog.api:
-    image: ${DOCKER_REGISTRY-}catalogapi
+    image: catalogapi
     build:
       context: .
       dockerfile: Catalog.API/Dockerfile
@@ -103,13 +115,12 @@ services:
     links:
       - mongo
     ports:
-      - 65155:80
       - 44398:443
     networks:
       - lan-network
  
   catalog-ui:
-    image: ${DOCKER_REGISTRY-}catalogui
+    image: catalogui
     build: 
       context: ../catalog-ui/.
       dockerfile: Dockerfile
