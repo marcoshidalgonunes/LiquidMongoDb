@@ -2,9 +2,7 @@ using System;
 using Catalog.API.Configuration;
 using Catalog.Domain.Entity;
 using Catalog.Service.Books.Handler;
-using Elastic.Apm.NetCoreAll;
-using Liquid.Core.Extensions.DependencyInjection;
-using Liquid.Core.Implementations;
+using Liquid.ElasticApm.Extensions.DependencyInjection;
 using Liquid.WebApi.Http.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,11 +41,14 @@ namespace Catalog.API
                 });
             }
 
-            services.AddInterceptor<LiquidTelemetryInterceptor>();
-
-            services.AddLiquidHttp(typeof(BooksListRequestHandler).Assembly);
+            if (_env.IsEnvironment("DockerCompose"))
+            {
+                services.AddElasticApmTelemetry();
+            }
 
             services.AddLiquidMongoDatabaseWithTelemetry<Book, string>("BookstoreDb");
+
+            services.AddLiquidHttp(typeof(BooksListRequestHandler).Assembly);
 
             services.AddControllers();
         }
@@ -57,7 +58,7 @@ namespace Catalog.API
         {
             if (_env.IsEnvironment("DockerCompose"))
             {
-                app.UseAllElasticApm(Configuration); // Enable ElasticSearch APM
+                app.UseLiquidElasticApm(Configuration);
             }
 
             if (_env.IsDevelopment())

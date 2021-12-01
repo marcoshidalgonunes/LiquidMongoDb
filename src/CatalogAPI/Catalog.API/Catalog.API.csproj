@@ -9,12 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Core\**" />
+    <Content Remove="Core\**" />
+    <EmbeddedResource Remove="Core\**" />
+    <None Remove="Core\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="WeatherForecast.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Elastic.Apm.MongoDb" Version="1.12.1" />
-    <PackageReference Include="Elastic.Apm.NetCoreAll" Version="1.12.1" />
     <PackageReference Include="Elastic.Apm.SerilogEnricher" Version="1.5.3" />
     <PackageReference Include="Liquid.WebApi.Http" Version="2.0.3" />
     <PackageReference Include="MediatR" Version="9.0.0" />
@@ -29,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Liquid.ElasticApm\Liquid.ElasticApm.csproj" />
     <ProjectReference Include="..\Catalog.Domain\Catalog.Domain.csproj" />
     <ProjectReference Include="..\Catalog.Service\Catalog.Service.csproj" />
   </ItemGroup>
