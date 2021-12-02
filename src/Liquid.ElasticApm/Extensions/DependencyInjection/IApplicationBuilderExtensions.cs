@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 namespace Liquid.ElasticApm.Extensions.DependencyInjection
 {
     /// <summary>
-    /// .Net application builder extensions class.
+    /// Extends <see cref="IApplicationBuilder"/> interface.
     /// </summary>
     [ExcludeFromCodeCoverage]
     public static class IApplicationBuilderExtensions
@@ -19,12 +19,10 @@ namespace Liquid.ElasticApm.Extensions.DependencyInjection
         /// <param name="configuration"><see cref="IConfiguration"/> implementation.</param>
         public static IApplicationBuilder UseLiquidElasticApm(this IApplicationBuilder builder, IConfiguration configuration)
         {
-            //if (Agent.Config.Enabled)
-            //{
-            //    builder.UseAllElasticApm(configuration);
-            //}
-
-            builder.UseAllElasticApm(configuration);
+            if (configuration.HasElasticApmEnabled())
+            {
+                builder.UseAllElasticApm(configuration);
+            }
 
             return builder;
         }

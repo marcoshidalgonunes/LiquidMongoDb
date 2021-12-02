@@ -14,13 +14,13 @@ namespace Catalog.API
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
+        private readonly IConfiguration _configuration;
 
         private readonly IWebHostEnvironment _env;
 
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            _configuration = configuration;
             _env = env;
         }
 
@@ -43,7 +43,7 @@ namespace Catalog.API
 
             if (_env.IsEnvironment("DockerCompose"))
             {
-                services.AddElasticApmTelemetry();
+                services.AddElasticApmTelemetry(_configuration);
             }
 
             services.AddLiquidMongoDatabaseWithTelemetry<Book, string>("BookstoreDb");
@@ -58,7 +58,7 @@ namespace Catalog.API
         {
             if (_env.IsEnvironment("DockerCompose"))
             {
-                app.UseLiquidElasticApm(Configuration);
+                app.UseLiquidElasticApm(_configuration);
             }
 
             if (_env.IsDevelopment())
