@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Elastic.Apm.Api;
 using MediatR;
@@ -15,7 +17,7 @@ namespace Liquid.ElasticApm.MediatR
     {
         private readonly ILogger<LoggingBehaviour<TRequest, TResponse>> _logger;
 
-        private ITransaction _transaction;
+        private readonly ITransaction _transaction;
 
         /// <summary>
         /// Initialize an instance of <see cref="LoggingBehaviour<TRequest, TResponse>"/>
@@ -37,15 +39,46 @@ namespace Liquid.ElasticApm.MediatR
         /// <returns></returns>
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            var span = _transaction?.StartSpan(typeof(TRequest).Name, typeof(TRequest).FullName, "MediatR");
+            var methodInfo = next.GetMethodInfo();
 
-            _logger?.LogInformation($"Handling {typeof(TRequest).Name}");           
-            var response = await next();           
-            _logger?.LogInformation($"Handled {typeof(TResponse).Name}"); 
-            
-            span?.End();
+            TResponse response = default;
+
+            var span = _transaction?.StartSpan(methodInfo.Name, methodInfo.ReflectedType.Name);
+            try
+            {
+                await BeforeRequest(methodInfo);
+                response = await next();
+            }
+            catch (Exception ex)
+            {
+                await OnExceptionResponse(methodInfo, ex);
+                throw;
+            }
+            finally
+            {
+                await AfterResponse(methodInfo);
+                span?.End();
+            }
 
             return response;
+        }
+
+        private Task AfterResponse(MethodInfo methodInfo)
+        {
+            _logger.LogInformation($"Execution of {methodInfo.Name} from {methodInfo.ReflectedType.Name} has ended.");
+            return Task.CompletedTask;
+        }
+
+        private Task OnExceptionResponse(MethodInfo methodInfo, Exception exception)
+        {
+            _logger.LogError(exception, $"Execution of {methodInfo.Name} from {methodInfo.ReflectedType.Name} has thrown an exception.");
+            return Task.CompletedTask;
+        }
+
+        private Task BeforeRequest(MethodInfo methodInfo)
+        {            
+            _logger.LogInformation($"Starting execution of {methodInfo.Name} from {methodInfo.ReflectedType.Name}.");
+            return Task.CompletedTask;
         }
     }
 }
