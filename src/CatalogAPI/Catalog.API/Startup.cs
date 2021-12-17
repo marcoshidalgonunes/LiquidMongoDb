@@ -2,7 +2,7 @@ using System;
 using Catalog.API.Configuration;
 using Catalog.Domain.Entity;
 using Catalog.Service.Books.Handler;
-using Liquid.ElasticApm.Extensions.DependencyInjection;
+using Liquid.Core.Telemetry.ElasticApm.Extensions.DependencyInjection;
 using Liquid.WebApi.Http.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,10 +41,7 @@ namespace Catalog.API
                 });
             }
 
-            if (_env.IsEnvironment("DockerCompose"))
-            {
-                services.AddElasticApmTelemetry(_configuration);
-            }
+            services.AddLiquidElasticApmTelemetry(_configuration);
 
             services.AddLiquidMongoDatabaseWithTelemetry<Book, string>("BookstoreDb");
 
@@ -56,10 +53,7 @@ namespace Catalog.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
-            if (_env.IsEnvironment("DockerCompose"))
-            {
-                app.UseLiquidElasticApm(_configuration);
-            }
+            app.UseLiquidElasticApm(_configuration);
 
             if (_env.IsDevelopment())
             {

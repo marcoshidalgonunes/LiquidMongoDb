@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="Elastic.Apm.SerilogEnricher" Version="1.5.3" />
+    <PackageReference Include="Liquid.Core.Telemetry.ElasticApm" Version="2.0.0-preview-20211216-01" />
     <PackageReference Include="Liquid.WebApi.Http" Version="2.0.3" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
@@ -34,7 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Liquid.ElasticApm\Liquid.ElasticApm.csproj" />
     <ProjectReference Include="..\Catalog.Domain\Catalog.Domain.csproj" />
     <ProjectReference Include="..\Catalog.Service\Catalog.Service.csproj" />
   </ItemGroup>

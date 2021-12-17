@@ -22,10 +22,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Domain", "Catalog.D
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7E0A5034-245C-4704-9055-825E62428EC5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Liquid Complement", "4. Liquid Complement", "{DA48FAF2-CCE5-44BF-82A3-6A08507956BB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Liquid.ElasticApm", "..\Liquid.ElasticApm\Liquid.ElasticApm.csproj", "{886F4ABB-E393-4DDD-AC4C-4A4C22C43BCB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,10 +48,6 @@ Global
 		{7E0A5034-245C-4704-9055-825E62428EC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E0A5034-245C-4704-9055-825E62428EC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E0A5034-245C-4704-9055-825E62428EC5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{886F4ABB-E393-4DDD-AC4C-4A4C22C43BCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{886F4ABB-E393-4DDD-AC4C-4A4C22C43BCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{886F4ABB-E393-4DDD-AC4C-4A4C22C43BCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{886F4ABB-E393-4DDD-AC4C-4A4C22C43BCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,7 +57,6 @@ Global
 		{B7EFFA99-62D1-4E31-BD55-2EE5B85552B9} = {E4265544-1647-45C7-A683-F44CF6C3EEE9}
 		{7808D690-8BF5-4A48-8FC8-9CB6CA411297} = {9800864D-5C67-4B3A-8DA1-61032462AFE3}
 		{4C110158-708D-4B8F-AC9B-F1CF2128F465} = {E4265544-1647-45C7-A683-F44CF6C3EEE9}
-		{886F4ABB-E393-4DDD-AC4C-4A4C22C43BCB} = {DA48FAF2-CCE5-44BF-82A3-6A08507956BB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8B94C99-D433-4B5A-B8E6-64F125857223}
