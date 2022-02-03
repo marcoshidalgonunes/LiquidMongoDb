@@ -13,6 +13,10 @@ The docker-compose.yml also references some docker volumes. They should be creat
 
 The network for the orchestration is declared in docker-compose.yml.
 
+### Docker Desktop
+
+It is needed a valid [Docker License](https://www.docker.com/pricing) to work with [Visual Studio](https://visualstudio.microsoft.com/downloads/). As alternative, you can use a Linux Distro of preference (e.g. Ubuntu) and [Visual Studio Code](https://code.visualstudio.com/). Linux can run on [WSL](https://docs.microsoft.com/en-us/windows/wsl/).
+
 ## Observability Setup
 
 For [ELK Stack](https://www.elastic.co/what-is/elk-stack) the docker-compose.yml provides the needed settings for [Kibana](https://www.elastic.co/kibana/) dashboards, including [Elasticsearch APM](https://www.elastic.co/apm/) data.
