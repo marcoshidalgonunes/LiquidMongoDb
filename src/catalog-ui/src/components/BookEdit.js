@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import ApiBooks from '../services/apiBooks';
 
 class BookEdit extends Component {
@@ -50,7 +50,7 @@ class BookEdit extends Component {
         : this.state.error 
            ? <div className='alert alert-danger mt-3 mx-5'>An error happened with Catalog Service: <strong>{this.state.error}</strong><hr/><Link to='/'>Return</Link></div>
            : this.state.redirect 
-             ? <Redirect to={this.state.redirect} />
+             ? <Navigate to={this.state.redirect} />
              : this.createForm();
       return (
         <div>
