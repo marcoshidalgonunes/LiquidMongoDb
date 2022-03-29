@@ -10,8 +10,8 @@ class App extends Component {
     return (
       <Routes>
         <Route path="/createbook" element={ <BookCreate/> } />
-        <Route path="/updatebook/:id" element={ <BookUpdate/>} />
-        <Route path="/deletebook/:id" element={ <BookDelete/>} />
+        <Route path="/updatebook/:id" element={ <BookUpdate/> } />
+        <Route path="/deletebook/:id" element={ <BookDelete/> } />
         <Route path="/" element={ <BooksList/> } />
       </Routes>
     );

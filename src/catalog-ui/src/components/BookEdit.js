@@ -96,7 +96,7 @@ class BookEdit extends Component {
                   required
                   value={this.state.author}
                   onChange={this.onAuthorChange}
-                  name="description"
+                  name="author"
                 />
               </div>
               <div className="form-group mt-2">
@@ -108,7 +108,7 @@ class BookEdit extends Component {
                   required
                   value={this.state.category}
                   onChange={this.onCategoryChange}
-                  name="description"
+                  name="category"
                 />
               </div>
               <div className="form-group mt-2">
@@ -120,7 +120,7 @@ class BookEdit extends Component {
                   required
                   value={this.state.price}
                   onChange={this.onPriceChange}
-                  name="description"
+                  name="price"
                 />
               </div>
               <div className="d-flex justify-content-center">
