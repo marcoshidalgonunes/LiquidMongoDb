@@ -6,7 +6,7 @@ class BookEdit extends Component {
 
     constructor(props) {
       super(props);
-      const id = props.match ? props.match.params.id : null;
+      const id = this.props.id ? this.props.id : null;
       this.state = { 
         loading: true,
         id: id, 
