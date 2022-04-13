@@ -23,6 +23,20 @@ namespace Catalog.API
                             builder.AddUserSecrets<Program>();
                         }
                     })
+                    // Configuration adapted from https://blog.datalust.co/using-serilog-in-net-6/
+                    .UseSerilog((hostingContext, loggerConfiguration) => {
+                        loggerConfiguration
+                            .ReadFrom.Configuration(hostingContext.Configuration)
+                            .Enrich.FromLogContext()
+                            .Enrich.WithProperty("ApplicationName", typeof(Program).Assembly.GetName().Name)
+                            .Enrich.WithProperty("Environment", hostingContext.HostingEnvironment);
+
+#if DEBUG
+                        // Used to filter out potentially bad data due debugging.
+                        // Very useful when doing Seq dashboards and want to remove logs under debugging session.
+                        loggerConfiguration.Enrich.WithProperty("DebuggerAttached", Debugger.IsAttached);
+#endif
+                    })
                     .Build();
                 host.Run();
             }
@@ -59,21 +73,7 @@ namespace Catalog.API
             => Host.CreateDefaultBuilder(args)
                    .ConfigureWebHostDefaults(webBuilder =>
                    {
-                       webBuilder.UseStartup<Startup>()
-                        .CaptureStartupErrors(true)
-                        .UseSerilog((hostingContext, loggerConfiguration) => {
-                            loggerConfiguration
-                                .ReadFrom.Configuration(hostingContext.Configuration)
-                                .Enrich.FromLogContext()
-                                .Enrich.WithProperty("ApplicationName", typeof(Program).Assembly.GetName().Name)
-                                .Enrich.WithProperty("Environment", hostingContext.HostingEnvironment);
-
-#if DEBUG
-                            // Used to filter out potentially bad data due debugging.
-                            // Very useful when doing Seq dashboards and want to remove logs under debugging session.
-                            loggerConfiguration.Enrich.WithProperty("DebuggerAttached", Debugger.IsAttached);
-#endif
-                        });
+                       webBuilder.UseStartup<Startup>().CaptureStartupErrors(true);
                    });
     }
 }
