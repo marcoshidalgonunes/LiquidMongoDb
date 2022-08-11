@@ -112,7 +112,16 @@ services:
       - mongo
     networks:
       - lan-network
- 
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - 5000:80
+      - 44347:443
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
   catalog-ui:
     container_name: catalogui
     image: ${DOCKER_REGISTRY-}catalogui
