@@ -1,10 +1,13 @@
-FROM node:13-alpine
+FROM node:alpine as builder
 WORKDIR /app
-ENV PATH /app/node_modules/.bin:$PATH
+COPY . .
+COPY .env.docker .env
+RUN npm install -g pnpm
+RUN pnpm install
+RUN pnpm build
 
-COPY package.json /app/package.json
-
-RUN npm install 
-RUN npm install react-scripts@3.3.1 -g 
-
-CMD ["npm", "start"]
+FROM nginx:alpine as prod
+WORKDIR /usr/share/nginx/html
+COPY --from=builder /app/build ./
+EXPOSE 80
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
