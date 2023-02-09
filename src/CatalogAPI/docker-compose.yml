@@ -132,6 +132,8 @@ services:
       - 3001:80
     networks:
       - lan-network
+    env_file:
+      - ../catalog-ui/.env
 
 volumes:
   mongodata:
