@@ -1,6 +1,7 @@
 FROM node:alpine as builder
 WORKDIR /app
 COPY . .
+COPY .env.docker .env
 RUN npm install -g pnpm
 RUN pnpm install
 RUN pnpm build
