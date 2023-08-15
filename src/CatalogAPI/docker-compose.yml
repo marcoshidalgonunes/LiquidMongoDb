@@ -128,8 +128,6 @@ services:
     build: 
       context: ../catalog-ui/.
       dockerfile: Dockerfile
-    environment:
-      - NODE_ENV=desktop
     ports:
       - 3001:80
     networks:
