@@ -128,6 +128,8 @@ services:
     build: 
       context: ../catalog-ui/.
       dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: https://localhost:44347/api/
     ports:
       - 3001:80
     networks:

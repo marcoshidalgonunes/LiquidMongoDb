@@ -1,7 +1,8 @@
 FROM node:alpine as builder
+ARG REACT_APP_API_URL
+ENV REACT_APP_API_URL $REACT_APP_API_URL
 WORKDIR /app
 COPY . .
-COPY .env.docker .env
 RUN npm install -g pnpm
 RUN pnpm install
 RUN pnpm build
