@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, PropsWithChildren } from 'react';
 import { Container } from 'reactstrap';
 
-export class List extends Component {
-  static displayName = List.name;
+export class List extends Component<PropsWithChildren> {
+  static displayName: string = List.name;
 
   render () {
     return (

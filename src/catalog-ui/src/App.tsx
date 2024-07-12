@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component}  from 'react';
 import { Route, Routes, useParams } from "react-router-dom";
-import { BooksList } from './components/BooksList';
-import { BookCreate, BookUpdate, BookDelete } from './components/BookEdit';
-
+import { BookList } from './components/books/BookList';
 import './App.css';
+import { BookCreate, BookDelete, BookUpdate } from './components/books/BookEdit';
 
 const BookUpdateWrapper = () => {
   const params = useParams();
@@ -19,11 +18,11 @@ class App extends Component {
   render() {
     return (
       <Routes>
+        <Route path="/" element={ <BookList/> } />
         <Route path="/createbook" element={ <BookCreate/> } />
         <Route path="/updatebook/:id" element={ <BookUpdateWrapper/> } />
         <Route path="/deletebook/:id" element={ <BookDeleteWrapper/> } />
-        <Route path="/" element={ <BooksList/> } />
-      </Routes>
+      </Routes> 
     );
   }
 }

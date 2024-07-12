@@ -47,7 +47,8 @@ namespace Catalog.API
 
             services.AddLiquidHttp(typeof(BooksListRequestHandler).Assembly);
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
