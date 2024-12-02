@@ -126,7 +126,12 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost/health || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+      
   catalog-ui:
     container_name: catalogui
     image: ${DOCKER_REGISTRY-}catalogui
