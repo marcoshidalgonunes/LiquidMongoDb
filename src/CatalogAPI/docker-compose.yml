@@ -34,6 +34,9 @@ services:
       - 3000:3000
     networks:
       - lan-network
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
     volumes:
       - grafanadata:/var/lib/grafana
     healthcheck:
@@ -52,7 +55,8 @@ services:
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
     healthcheck:
       interval: 10s
       retries: 20
@@ -62,8 +66,8 @@ services:
     container_name: elasticapm
     image: ${DOCKER_REGISTRY-}docker.elastic.co/apm/apm-server:7.15.1
     depends_on:
-      - elasticsearch
-      - kibana
+      kibana:
+        condition: service_healthy
     cap_add: ["CHOWN", "DAC_OVERRIDE", "SETGID", "SETUID"]
     cap_drop: ["ALL"]
     ports:
@@ -107,7 +111,8 @@ services:
       context: .
       dockerfile: Catalog.API/Dockerfile
     depends_on:
-      - mongo
+      mongo:
+        condition: service_healthy
     links:
       - mongo
     networks:
@@ -134,6 +139,9 @@ services:
       - 3001:80
     networks:
       - lan-network
+    depends_on:
+      catalog.api:
+        condition: service_healthy
     env_file:
       - ../catalog-ui/.env
 
