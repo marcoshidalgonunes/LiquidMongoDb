@@ -30,7 +30,7 @@
     "react-select": "^5.10.0",
     "react-ts-app": "file:",
     "reactstrap": "^9.2.3",
-    "typescript": "^5.7.3",
+    "typescript": "^5.8.2",
     "web-vitals": "^4.2.4"
   },
   "devDependencies": {
