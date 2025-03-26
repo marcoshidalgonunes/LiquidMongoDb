@@ -27,7 +27,7 @@
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.3.0",
     "react-scripts": "^5.0.1",
-    "react-select": "^5.10.0",
+    "react-select": "^5.10.1",
     "react-ts-app": "file:",
     "reactstrap": "^9.2.3",
     "typescript": "^5.8.2",
