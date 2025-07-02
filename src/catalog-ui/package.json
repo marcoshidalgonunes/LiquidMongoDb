@@ -41,7 +41,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.15.30",
-    "ts-jest": "^29.3.4"
+    "ts-jest": "^29.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
